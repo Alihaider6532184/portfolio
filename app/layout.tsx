@@ -23,7 +23,18 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://alihaider.dev";
+// Resolve the canonical origin for absolute metadata URLs (OG/Twitter images).
+// Priority: an explicit override (set NEXT_PUBLIC_SITE_URL when you add a custom
+// domain) → Vercel's production domain (auto-injected) → the current deployment.
+function resolveSiteUrl() {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+}
+
+const SITE_URL = resolveSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
