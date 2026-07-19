@@ -1,5 +1,6 @@
 import Reveal from "./Reveal";
 import SectionHeader from "./SectionHeader";
+import { ProjectDemo } from "./ProjectDemos";
 import { projects, type Project } from "@/lib/content";
 
 // Reusable spec field: mono label above a value.
@@ -14,39 +15,6 @@ function SpecField({ label, children }: { label: string; children: React.ReactNo
   );
 }
 
-// A framed placeholder standing in for a screenshot / demo GIF.
-function MediaFrame({ label }: { label: string }) {
-  return (
-    <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-line bg-ink-800">
-      {/* Faint grid so the empty frame reads as an instrument viewport */}
-      <div
-        className="absolute inset-0 opacity-[0.4]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#22302b 1px, transparent 1px), linear-gradient(90deg, #22302b 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-      />
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
-        <span className="flex h-11 w-11 items-center justify-center rounded-full border border-amber/40 text-amber transition-transform duration-500 group-hover:scale-110">
-          {/* play / media glyph */}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M4 3l9 5-9 5V3z" fill="currentColor" />
-          </svg>
-        </span>
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bone-faint">
-          {label}
-        </span>
-      </div>
-      {/* Corner registration marks */}
-      <span className="absolute left-3 top-3 h-3 w-3 border-l border-t border-amber/40" />
-      <span className="absolute right-3 top-3 h-3 w-3 border-r border-t border-amber/40" />
-      <span className="absolute bottom-3 left-3 h-3 w-3 border-b border-l border-amber/40" />
-      <span className="absolute bottom-3 right-3 h-3 w-3 border-b border-r border-amber/40" />
-    </div>
-  );
-}
-
 function CaseStudy({ project, flip }: { project: Project; flip: boolean }) {
   return (
     <article className="relative pt-14 first:pt-0">
@@ -57,7 +25,7 @@ function CaseStudy({ project, flip }: { project: Project; flip: boolean }) {
             flip ? "lg:order-2 lg:col-start-8" : "lg:order-1"
           }`}
         >
-          <MediaFrame label={project.media} />
+          <ProjectDemo index={project.index} />
         </Reveal>
 
         {/* Content column */}
