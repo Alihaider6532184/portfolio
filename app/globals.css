@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    font-feature-settings: "ss01", "cv01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #e8823c;
+    color: #0b100e;
+  }
+
+  /* Focus ring — visible for keyboard users, quiet for mouse users. */
+  :focus-visible {
+    outline: 2px solid #f5a65b;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Custom scrollbar tuned to the palette (progressive enhancement). */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #22302b #0b100e;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: #0b100e;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #22302b;
+    border-radius: 999px;
+    border: 2px solid #0b100e;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-12;
+  }
+
+  /* Mono eyebrow used to label every section. */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.32em] text-amber;
+  }
+
+  .hairline {
+    @apply border-t border-line;
+  }
+
+  /* Amber underline that grows on hover for text links. */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-amber transition-transform duration-300 ease-out;
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    @apply scale-x-100;
+  }
+}
+
+/* Respect users who prefer reduced motion — kill transforms + smooth scroll. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Subtle film-grain / phosphor texture layered over the whole page. */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
